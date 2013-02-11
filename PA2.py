@@ -207,8 +207,8 @@ for line in ifile:
     print 'WriteLine();\n',
   elif sline[2] == 'read':
     #TODO: read didn't appear in all any tests.. need to be tested
-    print 'WriteLong(',
-    getOperand(3, sline, 0)
+    print 'long r' + sline[1] + ';\n\t',
+    print 'ReadLong( r' + sline[1],
     print ');\n',
 
 #Parameter and call
