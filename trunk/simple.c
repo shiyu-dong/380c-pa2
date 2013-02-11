@@ -5,33 +5,51 @@
 #define long long long
 
 long c;
-long a;
+long a[10];
 
-void zz(long t, long t2) {
-  a = t + t2;
-}
+struct S {
+  long t;
+} z;
 
 void main() {
   long b;
-  a = 25733;
+  long d;
   b = 34567;
   c = 0;
 
-  if (a>=b) {
-    c = 1;
-  }
-
   while(c<10) {
+    a[c] = c*333%11;
     c=c+1;
   }
 
-  c = 4;
-  b = c % 3;
+  c = 0;
+  while(c<10) {
+    WriteLong(a[c]);
+    c = c+1;
+  }
+  WriteLine();
 
-  WriteLong(a);
-  WriteLine();
-  WriteLong(b);
-  WriteLine();
-  WriteLong(c);
+  b = 9;
+  while(b > 0) {
+    c = 9;
+    while(c>=1) {
+      if (a[c-1] > a[c]) {
+        WriteLong(a[c-1]);
+        WriteLong(a[c]);
+        WriteLine();
+        b = a[c-1];
+        a[c-1] = a[c];
+        a[c] = b;
+      }
+      c = c-1;
+    }
+    b = b - 1;
+  }
+
+  c = 0;
+  while(c<10) {
+    WriteLong(a[c]);
+    c = c+1;
+  }
   WriteLine();
 }

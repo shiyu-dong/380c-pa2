@@ -1,10 +1,12 @@
 import sys, string, re, Queue
 
-arith = ['add', 'mul', 'neg', 'cmpeq', 'cmple', 'cmplt']
-operators = ['+', '*', '!', '==', '<', '>']
+arith = ['add', 'mul', 'neg', 'cmpeq', 'cmplt']
+operators = ['+', '*', '!', '==', '>']
 
-arith1 = ['sub', 'div', 'mod']
-operators1 = ['-', '/', '%']
+arith1 = ['sub', 'div', 'mod', 'cmple']
+operators1 = ['-', '/', '%', '<=']
+
+local_size = 0;
 
 # get operand
 def getOperand(t, sline, access_local):
@@ -15,7 +17,7 @@ def getOperand(t, sline, access_local):
 #FP
   elif sline[t] == 'FP':
     if access_local:
-      print '(char*)local',
+      print '(char*)&local[' + str(local_size/8 -1) + ']',
     else:
       print '(char*)param',
     return t+1
@@ -24,12 +26,12 @@ def getOperand(t, sline, access_local):
     print sline[t],
     return t+1
 #address offsets and field offsets
-  elif sline[t].endswith('base') or sline[t].endswith('_offsets'):
+  elif sline[t].endswith('_base') or sline[t].endswith('_offset'):
     if sline[t+1][0] == '-':
-      print sline[t+1].strip('-'),
+      print '(' + str(int(sline[t+1])+8) + ')',
       return -(t+2)
     else:
-      print sline[t+1],
+      print str(int(sline[t+1])-8),
       return t+2
 #register name
   elif sline[t][0] == '(':
@@ -42,7 +44,7 @@ def getOperand(t, sline, access_local):
 #local variables
   else:
     if sline[t+1][0] == '-':
-      print 'local[' + str(int(sline[t+1].strip('-'))/8-1) + ']',
+      print 'local[' + str((local_size-int(sline[t+1].strip('-')))/8) + ']',
     else:
       print 'param[' + str(int(sline[t+1])/8-1) + ']',
     return t+2
@@ -120,6 +122,7 @@ for line in ifile:
       print 'void main() {\n',
     if (sline[3] != '0'):
       print 'long local[' + str(int(sline[3])/8) + '];\n',
+    local_size = int(sline[3]);
     parsing_main = 0
 
 #main start
@@ -218,6 +221,7 @@ for line in ifile:
   elif sline[2] == 'call':
     param_name = 'param_' + sline[1]
     print 'long* ' + param_name + ' = (long*)malloc(sizeof(long)*' + str(params_n+1) + ');\n',
+    print 'free (' + str(param_name) + ');\n',
     params_n = 0;
     while not params.empty():
       tt = params.get();
