@@ -221,7 +221,6 @@ for line in ifile:
   elif sline[2] == 'call':
     param_name = 'param_' + sline[1]
     print 'long* ' + param_name + ' = (long*)malloc(sizeof(long)*' + str(params_n+1) + ');\n',
-    print 'free (' + str(param_name) + ');\n',
     params_n = 0;
     while not params.empty():
       tt = params.get();
@@ -229,6 +228,7 @@ for line in ifile:
       params_n += 1
     params_n = 0
     print 'func_' + sline[3].strip('[]') + '(' + param_name + ');\n',
+    print 'free (' + str(param_name) + ');\n',
 
 
 sys.exit(0)
