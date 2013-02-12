@@ -1,10 +1,8 @@
 import sys, string, re, Queue
 
-arith = ['add', 'mul', 'neg', 'cmpeq', 'cmplt']
-operators = ['+', '*', '!', '==', '>']
 
-arith1 = ['sub', 'div', 'mod', 'cmple']
-operators1 = ['-', '/', '%', '<=']
+arith = ['sub', 'div', 'mod', 'cmple', 'add', 'mul', 'neg', 'cmpeq', 'cmplt']
+operators = ['-', '/', '%', '<=', '+', '*', '!', '==', '<']
 
 local_size = 0;
 
@@ -134,27 +132,27 @@ for line in ifile:
     print 'return;\n}\n',
 
 #arithmatic
-  elif sline[2] in arith:
-    print 'long r' + sline[1] + ' =',
+#  elif sline[2] in arith:
+#    print 'long r' + sline[1] + ' =',
 ##    t = getOperand(3, sline, 0)
 ##    print operators[arith.index(sline[2])],
 ##    if (t < 0):
 ##      getOperand(-t, sline, 1)
 ##    else:
 ##      getOperand(t, sline, 0)
-    t = getStart(3, sline)
-    if (t < 0):
-      getOperand(-t, sline, 1)
-    else:
-      getOperand(t, sline, 0)
-    print operators[arith.index(sline[2])],
-    getOperand(3, sline, 0)
-    print ';\n',
+#    t = getStart(3, sline)
+#    if (t < 0):
+#      getOperand(-t, sline, 1)
+#    else:
+#      getOperand(t, sline, 0)
+#    print operators[arith.index(sline[2])],
+#    getOperand(3, sline, 0)
+#    print ';\n',
 
-  elif sline[2] in arith1:
+  elif sline[2] in arith:
     print 'long r' + sline[1] + ' =',
     t = getOperand(3, sline, 0)
-    print operators1[arith1.index(sline[2])],
+    print operators[arith.index(sline[2])],
     if (t < 0):
       getOperand(-t, sline, 1)
     else:
