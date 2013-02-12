@@ -77,11 +77,11 @@ def getStart(t, sline):
 
 
 #-----------------  Main  -----------------#
-if len(sys.argv) != 2:
-  print "please specify input file name"
-  sys.exit(0)
-
-ifile = open(sys.argv[1], 'r')
+#if len(sys.argv) != 2:
+#  print "please specify input file name"
+#  sys.exit(0)
+#
+#ifile = open(sys.argv[1], 'r')
 
 #parameters
 params = Queue.LifoQueue()
@@ -101,7 +101,8 @@ print '#include <stdio.h>\n\
 print 'long global[4096];\n'
 
 # parse the file line by line
-for line in ifile:
+#for line in ifile:
+for line in sys.stdin:
   sline = re.split(': | |#', line.rstrip('\n').lstrip(' '))
 
   if sline[2] == 'nop':

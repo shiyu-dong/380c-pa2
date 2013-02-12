@@ -5,12 +5,26 @@
 #define long long long
 
 
+long b;
+
+struct A {
+  long c;
+  long d[10];
+} e;
 
 void main() {
   long a;
 
   ReadLong(a);
+  ReadLong(b);
+  ReadLong(e.d[5]);
+  ReadLong(e.c);
   WriteLong(a);
+  WriteLong(b);
+  WriteLong(e.d[4]);
+  WriteLong(e.d[5]);
+  WriteLong(e.d[6]);
+  WriteLong(e.c);
   WriteLine();
   
 }
