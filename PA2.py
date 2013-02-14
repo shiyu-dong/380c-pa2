@@ -1,8 +1,10 @@
 import sys, string, re, Queue
 
 
-arith = ['sub', 'div', 'mod', 'cmple', 'add', 'mul', 'neg', 'cmpeq', 'cmplt']
-operators = ['-', '/', '%', '<=', '+', '*', '!', '==', '<']
+arith = ['sub', 'div', 'mod', 'cmple', 'add', 'mul', 'cmpeq', 'cmplt']
+operators = ['-', '/', '%', '<=', '+', '*', '==', '<']
+
+arith1 = ['neg']
 
 local_size = 0;
 
@@ -159,6 +161,11 @@ for line in sys.stdin:
     else:
       getOperand(t, sline, 0)
     print ';\n',
+
+  elif sline[2] in arith1:
+    print 'long r' + sline[1] + ' =',
+    t = getOperand(3, sline, 0)
+    print ' * (-1);\n',
 
 #branch
   elif sline[2] == 'br':
